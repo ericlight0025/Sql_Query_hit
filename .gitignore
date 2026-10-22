@@ -1,0 +1,6 @@
+__pycache__/
+*.pyc
+/result.txt
+/report.html
+/test_data/
+/stress_data/

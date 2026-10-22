@@ -1,0 +1,83 @@
+﻿SQL Coverage Finder
+===================
+搜尋完成 · 4997 支檔案 · 16 個需求欄位 · 命中 2952 支
+⚠ 資料夾不存在，略過：/home/claude/stress_data/partial_5000/NOT_EXIST
+未找到完整覆蓋（最多 3 支檔案）
+
+最佳覆蓋率 : 56% (9/16)
+所需檔案   : 3 支
+缺少欄位   : 7（櫃員餘額、交易CODE、存款號碼、帳戶餘額、ACCOUNT_CODE、交易名稱、交易餘額）
+
+最佳組合 #1
+-----------
+[1] Q040.sql                 累計 3/16
+    /home/claude/stress_data/partial_5000/Batch/SQL/Q040.sql
+    + TXN_DATE
+    + PAYEE_STATUS
+    + 帳戶ID
+    同覆蓋檔案（5）：
+      /home/claude/stress_data/partial_5000/Project/SQL/batch/daily/Q3441.sql
+      /home/claude/stress_data/partial_5000/Project/SQL/old/Q1596.sql
+      /home/claude/stress_data/partial_5000/Project/SQL/old/Q2343.sql
+      /home/claude/stress_data/partial_5000/Project/SQL/report/Q759.txt
+      /home/claude/stress_data/partial_5000/Work/SQL/report/Q2129.Txt
+[2] Q115.Txt                 累計 6/16
+    /home/claude/stress_data/partial_5000/Batch/SQL/Q115.Txt
+    + 帳戶類別
+    + 受款人代碼
+    + 放款名稱
+    同覆蓋檔案（5）：
+      /home/claude/stress_data/partial_5000/Batch/SQL/batch/daily/Q3742.sql
+      /home/claude/stress_data/partial_5000/Batch/SQL/old/Q4213.SQL
+      /home/claude/stress_data/partial_5000/Project/SQL/batch/daily/Q1656.SQL
+      /home/claude/stress_data/partial_5000/Work/SQL/Q2228.sql
+      /home/claude/stress_data/partial_5000/Work/SQL/report/Q3005.sql
+[3] Q1189.SQL                累計 9/16
+    /home/claude/stress_data/partial_5000/Batch/SQL/Q1189.SQL
+    + 分行狀態
+    + 定存序號
+    + 交易類別
+    同覆蓋檔案（3）：
+      /home/claude/stress_data/partial_5000/Batch/SQL/report/Q2890.sql
+      /home/claude/stress_data/partial_5000/Batch/SQL/report/Q4882.txt
+      /home/claude/stress_data/partial_5000/Work/SQL/old/Q3944.Txt
+
+總覆蓋率 9 / 16 · 缺少：櫃員餘額、交易CODE、存款號碼、帳戶餘額、ACCOUNT_CODE、交易名稱、交易餘額
+
+候選組合排名（前 5 組）
+排名  SQL 組合                         覆蓋率  支數
+1     Q040.sql + Q115.Txt + Q1189.SQL  56%     3
+2     Q040.sql + Q115.Txt + Q1252.Txt  56%     3
+3     Q040.sql + Q115.Txt + Q1633.txt  56%     3
+4     Q040.sql + Q115.Txt + Q2962.txt  56%     3
+5     Q040.sql + Q115.Txt + Q3331.Txt  56%     3
+
+候選組合檔案路徑
+#1  56% (9/16)  缺少：櫃員餘額、交易CODE、存款號碼、帳戶餘額、ACCOUNT_CODE、交易名稱、交易餘額
+    /home/claude/stress_data/partial_5000/Batch/SQL/Q040.sql
+    /home/claude/stress_data/partial_5000/Batch/SQL/Q115.Txt
+    /home/claude/stress_data/partial_5000/Batch/SQL/Q1189.SQL
+#2  56% (9/16)  缺少：分行狀態、存款號碼、定存序號、帳戶餘額、ACCOUNT_CODE、交易名稱、交易餘額
+    /home/claude/stress_data/partial_5000/Batch/SQL/Q040.sql
+    /home/claude/stress_data/partial_5000/Batch/SQL/Q115.Txt
+    /home/claude/stress_data/partial_5000/Batch/SQL/Q1252.Txt
+#3  56% (9/16)  缺少：櫃員餘額、分行狀態、交易CODE、存款號碼、帳戶餘額、交易名稱、交易餘額
+    /home/claude/stress_data/partial_5000/Batch/SQL/Q040.sql
+    /home/claude/stress_data/partial_5000/Batch/SQL/Q115.Txt
+    /home/claude/stress_data/partial_5000/Batch/SQL/Q1633.txt
+#4  56% (9/16)  缺少：分行狀態、交易CODE、交易類別、帳戶餘額、ACCOUNT_CODE、交易名稱、交易餘額
+    /home/claude/stress_data/partial_5000/Batch/SQL/Q040.sql
+    /home/claude/stress_data/partial_5000/Batch/SQL/Q115.Txt
+    /home/claude/stress_data/partial_5000/Batch/SQL/Q2962.txt
+#5  56% (9/16)  缺少：分行狀態、交易CODE、存款號碼、交易類別、ACCOUNT_CODE、交易名稱、交易餘額
+    /home/claude/stress_data/partial_5000/Batch/SQL/Q040.sql
+    /home/claude/stress_data/partial_5000/Batch/SQL/Q115.Txt
+    /home/claude/stress_data/partial_5000/Batch/SQL/Q3331.Txt
+
+⚠ 讀取失敗（3 支，未納入搜尋，可能影響結果）
+    /home/claude/stress_data/partial_5000/Project/SQL/Q000.sql
+      UnicodeDecodeError: 'cp950' codec can't decode byte 0x81 in position 0: 無法以 UTF-8 / UTF-8 BOM / CP950 / UTF-16 解碼
+    /home/claude/stress_data/partial_5000/Batch/SQL/report/monthly/Q001.SQL
+      UnicodeDecodeError: 'cp950' codec can't decode byte 0x81 in position 0: 無法以 UTF-8 / UTF-8 BOM / CP950 / UTF-16 解碼
+    /home/claude/stress_data/partial_5000/Work/SQL/Q002.sql
+      UnicodeDecodeError: 'cp950' codec can't decode byte 0x81 in position 0: 無法以 UTF-8 / UTF-8 BOM / CP950 / UTF-16 解碼

@@ -1,0 +1,75 @@
+﻿SQL Coverage Finder
+===================
+搜尋完成 · 4997 支檔案 · 12 個需求欄位 · 命中 3020 支
+⚠ 資料夾不存在，略過：/home/claude/stress_data/full_5000/NOT_EXIST
+已找到完整覆蓋
+
+最佳覆蓋率 : 100% (12/12)
+所需檔案   : 3 支
+缺少欄位   : 0
+
+最佳組合 #1
+-----------
+[1] Q028.Txt                 累計 5/12
+    /home/claude/stress_data/full_5000/Batch/SQL/Q028.Txt
+    + TELLER_BAL
+    + 分行CODE
+    + 受款人代碼
+    + 客戶ID
+    + 帳戶類別
+[2] Q1699.txt                累計 10/12
+    /home/claude/stress_data/full_5000/Batch/SQL/batch/daily/Q1699.txt
+    + 存款號碼
+    + 定存序號
+    + 交易餘額
+    + TXN_NAME
+    + 放款名稱
+    同覆蓋檔案（1）：
+      /home/claude/stress_data/full_5000/Project/SQL/batch/daily/Q792.sql
+[3] Q2509.sql                累計 12/12
+    /home/claude/stress_data/full_5000/Batch/SQL/batch/daily/Q2509.sql
+    + 分行狀態
+    + 交易類別
+    （另含已涵蓋：存款號碼、定存序號、TXN_NAME）
+    同覆蓋檔案（1）：
+      /home/claude/stress_data/full_5000/Work/SQL/report/monthly/Q2462.SQL
+
+總覆蓋率 12 / 12 · 全部需求欄位皆有找到
+
+候選組合排名（前 5 組）
+排名  SQL 組合                          覆蓋率  支數
+1     Q028.Txt + Q1699.txt + Q2509.sql  100%    3
+2     Q028.Txt + Q1699.txt + Q751.Txt   100%    3
+3     Q028.Txt + Q1699.txt + Q3475.SQL  100%    3
+4     Q028.Txt + Q1699.txt + Q4260.sql  100%    3
+5     Q028.Txt + Q1699.txt + Q1853.Txt  100%    3
+
+候選組合檔案路徑
+#1  100% (12/12)
+    /home/claude/stress_data/full_5000/Batch/SQL/Q028.Txt
+    /home/claude/stress_data/full_5000/Batch/SQL/batch/daily/Q1699.txt
+    /home/claude/stress_data/full_5000/Batch/SQL/batch/daily/Q2509.sql
+#2  100% (12/12)
+    /home/claude/stress_data/full_5000/Batch/SQL/Q028.Txt
+    /home/claude/stress_data/full_5000/Batch/SQL/batch/daily/Q1699.txt
+    /home/claude/stress_data/full_5000/Batch/SQL/batch/daily/Q751.Txt
+#3  100% (12/12)
+    /home/claude/stress_data/full_5000/Batch/SQL/Q028.Txt
+    /home/claude/stress_data/full_5000/Batch/SQL/batch/daily/Q1699.txt
+    /home/claude/stress_data/full_5000/Batch/SQL/old/Q3475.SQL
+#4  100% (12/12)
+    /home/claude/stress_data/full_5000/Batch/SQL/Q028.Txt
+    /home/claude/stress_data/full_5000/Batch/SQL/batch/daily/Q1699.txt
+    /home/claude/stress_data/full_5000/Project/SQL/report/monthly/Q4260.sql
+#5  100% (12/12)
+    /home/claude/stress_data/full_5000/Batch/SQL/Q028.Txt
+    /home/claude/stress_data/full_5000/Batch/SQL/batch/daily/Q1699.txt
+    /home/claude/stress_data/full_5000/Work/SQL/old/Q1853.Txt
+
+⚠ 讀取失敗（3 支，未納入搜尋，可能影響結果）
+    /home/claude/stress_data/full_5000/Project/SQL/report/monthly/Q000.txt
+      UnicodeDecodeError: 'cp950' codec can't decode byte 0x81 in position 0: 無法以 UTF-8 / UTF-8 BOM / CP950 / UTF-16 解碼
+    /home/claude/stress_data/full_5000/Batch/SQL/batch/daily/Q001.Txt
+      UnicodeDecodeError: 'cp950' codec can't decode byte 0x81 in position 0: 無法以 UTF-8 / UTF-8 BOM / CP950 / UTF-16 解碼
+    /home/claude/stress_data/full_5000/Work/SQL/report/monthly/Q002.txt
+      UnicodeDecodeError: 'cp950' codec can't decode byte 0x81 in position 0: 無法以 UTF-8 / UTF-8 BOM / CP950 / UTF-16 解碼

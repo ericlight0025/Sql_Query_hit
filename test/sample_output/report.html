@@ -1,0 +1,100 @@
+<!doctype html><html lang="zh-Hant"><head><meta charset="utf-8">
+<meta name="viewport" content="width=device-width,initial-scale=1"><title>SQL Coverage Finder 報告</title>
+<style>
+:root{--bg:#0b0f14;--panel:#121820;--panel2:#0e141b;--line:#1f2a36;--text:#e6edf3;--muted:#8b98a8;
+--accent:#5eead4;--accent2:#34d399;--warn:#fbbf24;--bad:#f87171;--chip:#15202b;--chip-line:#2a3a4a;--mono:Consolas,"Cascadia Mono","Courier New",monospace}
+*{box-sizing:border-box}
+body{margin:0;background:var(--bg);color:var(--text);font-family:"Segoe UI","Microsoft JhengHei","Noto Sans TC",system-ui,sans-serif;font-size:14px;line-height:1.55}
+a{color:var(--accent)}
+.top{display:flex;justify-content:space-between;align-items:center;padding:14px 48px;border-bottom:1px solid var(--line);background:var(--panel2)}
+.brand{font-weight:700;letter-spacing:.2px}.brand span{color:var(--accent);font-family:var(--mono);margin-right:8px}
+.top small{color:var(--muted);letter-spacing:2px;font-size:11px}
+.wrap{max-width:1100px;margin:0 auto;padding:32px 48px 64px}
+.eyebrow{color:var(--accent);font-size:11px;letter-spacing:3px;font-weight:700;margin-bottom:6px}
+h1{font-size:30px;margin:0 0 6px}h2{font-size:20px;margin:0}
+.sub{color:var(--muted);display:flex;justify-content:space-between;align-items:center;gap:16px;flex-wrap:wrap}
+.pill{border:1px solid var(--accent);color:var(--accent);border-radius:999px;padding:4px 14px;font-size:12px;white-space:nowrap}
+.pill.warn{border-color:var(--warn);color:var(--warn)}
+.cards{display:grid;grid-template-columns:repeat(auto-fit,minmax(200px,1fr));gap:14px;margin:26px 0 14px}
+.card{background:var(--panel);border:1px solid var(--line);border-radius:12px;padding:18px 20px}
+.card .k{color:var(--muted);font-size:12px;margin-bottom:8px}.card .v{font-size:26px;font-weight:700}.card .v small{font-size:13px;color:var(--muted);font-weight:400;margin-left:4px}
+.hero{display:grid;grid-template-columns:1.1fr 1fr;background:var(--panel);border:1px solid var(--line);border-radius:12px;overflow:hidden;margin-bottom:28px}
+.hero>div{padding:26px 28px}.hero>div+div{border-left:1px solid var(--line);background:var(--panel2)}
+.ring{display:flex;align-items:center;gap:26px}
+.ring svg{width:140px;height:140px;flex:none}
+.ring .pct{font-size:30px;font-weight:800;fill:var(--text)}.ring .lbl{font-size:10px;fill:var(--muted)}
+.ring h3{margin:0 0 6px;font-size:18px}.big{font-size:22px}.big small{color:var(--muted);font-size:16px}
+.muted{color:var(--muted)}
+.tabs{display:flex;gap:22px;margin:0 0 30px;color:var(--muted);font-size:13px}.tabs a{color:var(--muted);text-decoration:none}.tabs a:hover{color:var(--text)}
+.sec{display:flex;justify-content:space-between;align-items:end;margin:40px 0 14px}
+.file{background:var(--panel);border:1px solid var(--line);border-radius:12px;padding:20px 22px;margin-bottom:14px}
+.file .head{display:flex;align-items:center;gap:14px;margin-bottom:12px}
+.idx{width:30px;height:30px;border-radius:7px;background:#0f2a26;color:var(--accent);display:inline-flex;align-items:center;justify-content:center;font-family:var(--mono);font-size:12px;font-weight:700;flex:none}
+.file .name{font-size:17px;font-weight:700;word-break:break-all}.file .cum{margin-left:auto;color:var(--muted);white-space:nowrap}.file .cum b{color:var(--accent)}
+.path{font-family:var(--mono);font-size:12px;background:var(--panel2);border:1px solid var(--line);border-radius:8px;padding:9px 12px;word-break:break-all;user-select:all}
+.chips{display:flex;flex-wrap:wrap;gap:8px;margin-top:8px}
+.chip{border:1px solid var(--chip-line);background:var(--chip);border-radius:7px;padding:4px 10px;font-size:12px;color:var(--accent)}
+.chip.dim{color:var(--muted);border-style:dashed}.chip.bad{color:var(--bad);border-color:#4a2a2a;background:#1f1416}.chip.ok{color:var(--accent2)}
+.lab{color:var(--muted);font-size:12px;margin-top:14px}
+details{margin-top:12px}summary{cursor:pointer;color:var(--muted);font-size:13px}summary .n{display:inline-block;background:var(--chip);border:1px solid var(--chip-line);border-radius:5px;padding:0 7px;margin-left:6px;font-size:11px}
+details .path{margin-top:8px}
+table{width:100%;border-collapse:collapse;background:var(--panel);border:1px solid var(--line);border-radius:12px;overflow:hidden}
+th,td{text-align:left;padding:13px 16px;border-top:1px solid var(--line)}th{white-space:nowrap;color:var(--muted);font-weight:600;font-size:12px;background:var(--panel2);border-top:0}
+td.r{font-family:var(--mono);color:var(--accent)}td.c{color:var(--warn);font-weight:700;white-space:nowrap}td.n{white-space:nowrap}.mono{font-family:var(--mono)}
+.combo .sep{color:var(--muted);margin:0 6px}
+.note{border-left:3px solid var(--warn);background:#1a1712;padding:12px 16px;border-radius:0 8px 8px 0;margin:14px 0;color:#f3e2a8}
+.err{border-left:3px solid var(--bad);background:#1c1214;padding:12px 16px;border-radius:0 8px 8px 0;margin:14px 0}
+.err .path{margin-top:6px}.err .why{color:var(--muted);font-size:12px;margin:4px 0 10px}
+footer{margin-top:48px;color:var(--muted);font-size:12px;border-top:1px solid var(--line);padding-top:16px}
+@media(max-width:760px){.top,.wrap{padding-left:16px;padding-right:16px}.hero{grid-template-columns:1fr}.hero>div+div{border-left:0;border-top:1px solid var(--line)}}
+</style></head><body>
+<div class="top"><div class="brand"><span>&lt;/&gt;</span>SQL Coverage Finder</div><small>LOCAL SEARCH REPORT</small></div>
+<div class="wrap">
+<div class="eyebrow">COVERAGE REPORT</div><h1>欄位覆蓋分析</h1>
+<div class="sub"><div>從 SQL 與 TXT 檔案中，找出最接近需求的組合。產生時間 2026-10-21 16:48:54</div><span class="pill">● 搜尋完成</span></div>
+<div class="cards">
+<div class="card"><div class="k">已比對檔案</div><div class="v">4,997<small>支</small></div></div>
+<div class="card"><div class="k">需求欄位</div><div class="v">12<small>個</small></div></div>
+<div class="card"><div class="k">命中檔案</div><div class="v">3,020<small>支</small></div></div>
+<div class="card"><div class="k">掃描時間</div><div class="v">1.318<small>秒</small></div></div>
+</div>
+<div class="hero"><div><div class="ring">
+<svg viewBox="0 0 140 140"><circle cx="70" cy="70" r="54" fill="none" stroke="#1f2a36" stroke-width="10"/>
+<circle cx="70" cy="70" r="54" fill="none" stroke="#5eead4" stroke-width="10" stroke-linecap="round"
+ stroke-dasharray="339.3 339.3" transform="rotate(-90 70 70)"/>
+<text x="70" y="66" text-anchor="middle" class="pct">100%</text><text x="70" y="86" text-anchor="middle" class="lbl">欄位覆蓋率</text></svg>
+<div><h3>已找到完整覆蓋</h3><div class="big">12 <small>/ 12</small></div><div class="muted">所需 3 支 · 最多組合 5 支</div></div>
+</div></div><div><h3 style='margin:0 0 8px'>需求已完整涵蓋</h3><div class='muted'>所有需求欄位都已找到。</div></div></div>
+<div class="note">⚠ 有 3 支檔案無法讀取，未納入搜尋，可能影響結果。詳見「讀取失敗」。</div>
+<div class="tabs"><a href="#best">最佳組合</a><a href="#rank">候選排名</a><a href="#paths">檔案路徑</a><a href="#fields">需求清單</a><a href="#errors">讀取失敗</a></div>
+<div class="sec" id="best"><div><div class="eyebrow">BEST COMBINATION</div><h2>最佳組合 #1</h2></div><div class="muted">3 支檔案 · 12/12 個欄位</div></div>
+<div class="file"><div class="head"><span class="idx">01</span><span class="name">Q028.Txt</span><span class="cum">累計 <b>5/12</b></span></div><div class="path">/home/claude/stress_data/full_5000/Batch/SQL/Q028.Txt</div><div class="lab">新增 5 個欄位</div><div class="chips"><span class="chip ">TELLER_BAL</span><span class="chip ">分行CODE</span><span class="chip ">受款人代碼</span><span class="chip ">客戶ID</span><span class="chip ">帳戶類別</span></div>
+</div>
+<div class="file"><div class="head"><span class="idx">02</span><span class="name">Q1699.txt</span><span class="cum">累計 <b>10/12</b></span></div><div class="path">/home/claude/stress_data/full_5000/Batch/SQL/batch/daily/Q1699.txt</div><div class="lab">新增 5 個欄位</div><div class="chips"><span class="chip ">存款號碼</span><span class="chip ">定存序號</span><span class="chip ">交易餘額</span><span class="chip ">TXN_NAME</span><span class="chip ">放款名稱</span></div>
+<details><summary>同覆蓋檔案<span class="n">1</span></summary><div class="path">/home/claude/stress_data/full_5000/Project/SQL/batch/daily/Q792.sql</div></details>
+</div>
+<div class="file"><div class="head"><span class="idx">03</span><span class="name">Q2509.sql</span><span class="cum">累計 <b>12/12</b></span></div><div class="path">/home/claude/stress_data/full_5000/Batch/SQL/batch/daily/Q2509.sql</div><div class="lab">新增 2 個欄位</div><div class="chips"><span class="chip ">分行狀態</span><span class="chip ">交易類別</span></div>
+<div class="lab">另含已涵蓋 3 個</div><div class="chips"><span class="chip dim">存款號碼</span><span class="chip dim">定存序號</span><span class="chip dim">TXN_NAME</span></div>
+<details><summary>同覆蓋檔案<span class="n">1</span></summary><div class="path">/home/claude/stress_data/full_5000/Work/SQL/report/monthly/Q2462.SQL</div></details>
+</div>
+<div class="sec" id="rank"><div><div class="eyebrow">TOP MATCHES</div><h2>候選組合排名</h2></div><div class="muted">前 5 組</div></div>
+<table><tr><th>排名</th><th>SQL 組合</th><th>覆蓋率</th><th>檔案數</th><th>缺少</th></tr>
+<tr><td class="r">01</td><td class="combo"><span class="mono">Q028.Txt</span><span class="sep">+</span><span class="mono">Q1699.txt</span><span class="sep">+</span><span class="mono">Q2509.sql</span></td><td class="c">100%</td><td class="n">3 支</td><td class="muted">—</td></tr>
+<tr><td class="r">02</td><td class="combo"><span class="mono">Q028.Txt</span><span class="sep">+</span><span class="mono">Q1699.txt</span><span class="sep">+</span><span class="mono">Q751.Txt</span></td><td class="c">100%</td><td class="n">3 支</td><td class="muted">—</td></tr>
+<tr><td class="r">03</td><td class="combo"><span class="mono">Q028.Txt</span><span class="sep">+</span><span class="mono">Q1699.txt</span><span class="sep">+</span><span class="mono">Q3475.SQL</span></td><td class="c">100%</td><td class="n">3 支</td><td class="muted">—</td></tr>
+<tr><td class="r">04</td><td class="combo"><span class="mono">Q028.Txt</span><span class="sep">+</span><span class="mono">Q1699.txt</span><span class="sep">+</span><span class="mono">Q4260.sql</span></td><td class="c">100%</td><td class="n">3 支</td><td class="muted">—</td></tr>
+<tr><td class="r">05</td><td class="combo"><span class="mono">Q028.Txt</span><span class="sep">+</span><span class="mono">Q1699.txt</span><span class="sep">+</span><span class="mono">Q1853.Txt</span></td><td class="c">100%</td><td class="n">3 支</td><td class="muted">—</td></tr>
+</table>
+<div class="sec" id="paths"><div><div class="eyebrow">FILE PATHS</div><h2>候選組合檔案路徑</h2></div></div>
+<details open><summary>#1 · 100%（12/12）· 3 支</summary><div class="path">/home/claude/stress_data/full_5000/Batch/SQL/Q028.Txt</div><div class="path">/home/claude/stress_data/full_5000/Batch/SQL/batch/daily/Q1699.txt</div><div class="path">/home/claude/stress_data/full_5000/Batch/SQL/batch/daily/Q2509.sql</div></details>
+<details ><summary>#2 · 100%（12/12）· 3 支</summary><div class="path">/home/claude/stress_data/full_5000/Batch/SQL/Q028.Txt</div><div class="path">/home/claude/stress_data/full_5000/Batch/SQL/batch/daily/Q1699.txt</div><div class="path">/home/claude/stress_data/full_5000/Batch/SQL/batch/daily/Q751.Txt</div></details>
+<details ><summary>#3 · 100%（12/12）· 3 支</summary><div class="path">/home/claude/stress_data/full_5000/Batch/SQL/Q028.Txt</div><div class="path">/home/claude/stress_data/full_5000/Batch/SQL/batch/daily/Q1699.txt</div><div class="path">/home/claude/stress_data/full_5000/Batch/SQL/old/Q3475.SQL</div></details>
+<details ><summary>#4 · 100%（12/12）· 3 支</summary><div class="path">/home/claude/stress_data/full_5000/Batch/SQL/Q028.Txt</div><div class="path">/home/claude/stress_data/full_5000/Batch/SQL/batch/daily/Q1699.txt</div><div class="path">/home/claude/stress_data/full_5000/Project/SQL/report/monthly/Q4260.sql</div></details>
+<details ><summary>#5 · 100%（12/12）· 3 支</summary><div class="path">/home/claude/stress_data/full_5000/Batch/SQL/Q028.Txt</div><div class="path">/home/claude/stress_data/full_5000/Batch/SQL/batch/daily/Q1699.txt</div><div class="path">/home/claude/stress_data/full_5000/Work/SQL/old/Q1853.Txt</div></details>
+<div class="sec" id="fields"><div><div class="eyebrow">REQUIRED FIELDS</div><h2>需求清單</h2></div><div class="muted">找到 12 · 缺少 0</div></div>
+<div class="chips"><span class="chip ok">存款號碼</span><span class="chip ok">分行狀態</span><span class="chip ok">定存序號</span><span class="chip ok">TELLER_BAL</span><span class="chip ok">交易類別</span><span class="chip ok">分行CODE</span><span class="chip ok">受款人代碼</span><span class="chip ok">交易餘額</span><span class="chip ok">TXN_NAME</span><span class="chip ok">客戶ID</span><span class="chip ok">放款名稱</span><span class="chip ok">帳戶類別</span></div>
+<div class="lab">掃描資料夾</div><div class="path" style="margin-top:6px">/home/claude/stress_data/full_5000/Project/SQL</div><div class="path" style="margin-top:6px">/home/claude/stress_data/full_5000/Batch/SQL</div><div class="path" style="margin-top:6px">/home/claude/stress_data/full_5000/Work/SQL</div><div class="path" style="margin-top:6px">/home/claude/stress_data/full_5000/NOT_EXIST</div>
+<div class="lab">警告</div><div class="note">資料夾不存在，略過：/home/claude/stress_data/full_5000/NOT_EXIST</div>
+<div class="sec" id="errors"><div><div class="eyebrow">READ ERRORS</div><h2>讀取失敗</h2></div><div class="muted">3 支，未納入搜尋</div></div>
+<div class="err"><div class="path">/home/claude/stress_data/full_5000/Project/SQL/report/monthly/Q000.txt</div><div class="why">UnicodeDecodeError: &#x27;cp950&#x27; codec can&#x27;t decode byte 0x81 in position 0: 無法以 UTF-8 / UTF-8 BOM / CP950 / UTF-16 解碼</div><div class="path">/home/claude/stress_data/full_5000/Batch/SQL/batch/daily/Q001.Txt</div><div class="why">UnicodeDecodeError: &#x27;cp950&#x27; codec can&#x27;t decode byte 0x81 in position 0: 無法以 UTF-8 / UTF-8 BOM / CP950 / UTF-16 解碼</div><div class="path">/home/claude/stress_data/full_5000/Work/SQL/report/monthly/Q002.txt</div><div class="why">UnicodeDecodeError: &#x27;cp950&#x27; codec can&#x27;t decode byte 0x81 in position 0: 無法以 UTF-8 / UTF-8 BOM / CP950 / UTF-16 解碼</div></div>
+<footer>SQL Coverage Finder · 僅比對文字中的完整識別字，不解析 SQL 語法；註解中的欄位也會命中。</footer></div></body></html>
